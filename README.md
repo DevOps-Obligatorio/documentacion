@@ -1,8 +1,11 @@
-# Universidad ORT Uruguay
-## Obligatorio DevOps
+# Obligatorio DevOps
 
-### Integrantes
-- Damian Alvez
-- Lucas Viera
+Repositorio para entrega de Obligatorio Certificado DevOps de Universdiad ORT
 
+## Documentación
 
+Ver `Documentacion.md`
+
+## Estudiantes
+- Damian Alvez - 180703
+- Lucas Viera - 177863
