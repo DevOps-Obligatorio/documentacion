@@ -1,4 +1,8 @@
-## Diagrama GitFlow
+# Documentación
+
+En el presente documento se demuestran los avances, decisiones y observaciones referentes al Proyecto Integrador con su correspondiente referencia.
+
+---
 
 ## 2.a Creación de ambientes para microservicios
 
@@ -7,3 +11,33 @@ Se utilizaron los microservicios propuestos por el Docente. Los cuatro microserv
 Esto fue siguiendo una metodología de trabajo basada en Gitflow según se muestra en el diagrama a continuación.
 
 ![](images/gitflow_diagram.png)
+
+## 2.b Empaquetado en containers y despliegue en AWS
+
+
+
+## 2.c Aplicación de tests y registro de resultados
+
+
+## 2.d Análisis de código estático, registro de resultados y recomentaciones.
+
+## 2.e Utilización de Git y GitFlow para el ciclo de desarrollo.
+
+## 2.f Documentación de toda la implementación
+
+Este paso se cumple en el presente documento.
+
+## 2.g Diagrama CI/CD
+
+De acuerdo a la configuración decidida por el equipo, un diagrama de Continous Integration y Continous Delivery podría representarse como en la siguiente imagen.
+
+![](images/cicd_diagram.png)
+
+## 2.h Manejo de IaC en AWS
+
+## 2.i Acceso al equipo docente
+
+Para brindar acceso de sólo lectura al equipo docente se procede a agregar con rol `Member?` al usuario `ElLargo` dentro de la organización [DevOps-Obligatorio][1] la cual contiene los repositorios y documentación necesarias para la correcta evaluación.
+
+
+[1]: https://github.com/DevOps-Obligatorio
