@@ -12,6 +12,26 @@ Esto fue siguiendo una metodología de trabajo basada en Gitflow según se muest
 
 ![](images/gitflow_diagram.png)
 
+A continuación se listan los enlaces para cada repositorio de microservicio:
+
+- [payments-service-example][2] 
+- [orders-service-example][3]
+- [shipping-service-example][4]
+- [products-service-example][5]
+
+Observar que en primera instancia, en cada repositorio se agregaron las cuatro ramas a utilizar siguiendo la metodología Gitflow. Mediante un comando `git branch -a` se pueden ver todas las ramas:
+
+```
+* main
+  remotes/origin/Develop
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/Staging
+  remotes/origin/Testing
+  remotes/origin/main
+```
+
+
+
 ## 2.b Empaquetado en containers y despliegue en AWS
 
 
@@ -41,3 +61,7 @@ Para brindar acceso de sólo lectura al equipo docente se procede a agregar con 
 
 
 [1]: https://github.com/DevOps-Obligatorio
+[2]: https://github.com/DevOps-Obligatorio/payments-service-example
+[3]: https://github.com/DevOps-Obligatorio/orders-service-example
+[4]: https://github.com/DevOps-Obligatorio/shipping-service-example
+[5]:https://github.com/DevOps-Obligatorio/products-service-example
