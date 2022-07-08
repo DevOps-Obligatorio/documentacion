@@ -10,7 +10,7 @@ Se utilizaron los microservicios propuestos por el Docente. Los cuatro microserv
 
 Esto fue siguiendo una metodología de trabajo basada en Gitflow según se muestra en el diagrama a continuación.
 
-![](images/gitflow_diagram.png)
+![](images/diagrams/gitflow_diagram.png)
 
 A continuación se listan los enlaces para cada repositorio de microservicio:
 
@@ -29,8 +29,53 @@ Observar que en primera instancia, en cada repositorio se agregaron las cuatro r
   remotes/origin/Testing
   remotes/origin/main
 ```
+## Build Microservicios
+
+## Docker Hub
+
+Pasos para hacer `push` a una imagen local a `Docker Hub`
+- `docker login`
+- Crear imagen `docker build --build-arg JAR_FILE=orders-service-example.jar -t orders-service-example:1 .`
+
+- `docker tag shipping-service-example:1 shipping-service-1`
+- `docker push lucasdock/devops-ort:obl`
 
 
+## Github Actions
+
+Se utiliza el servicio `Github Actions`
+
+Ver `.github/worflows` - se ejecutan varios en paralelo
+Ver Docker Hub
+Ver Sonarcloud.io
+
+## Terraform
+1- Crear archivo `main.tf`
+2- Para inicializarlo correr `terraform init` en el mismo directorio del `main.tf`
+3- Una vez finalizado, correr `terraform validate`
+4- Una vez finalizado, correr `terraform plan`
+5- Finalmente `terraform apply`
+
+
+## AWS - ECS
+CPU units 1
+Security Group creado por defecto queda
+52.147.230.223
+
+### Setup ECS
+
+### Setup ECR
+
+### Requisitos de red: Subnet, Security Groyp, Route Table y NAT Gateway
+
+
+
+## Sonarcloud
+
+- Registro e inicio de sesion
+![](images/SonarCloud/1-sonarcloud.png)
+
+- Detección de oranización de Pbligatorio
 
 ## 2.b Empaquetado en containers y despliegue en AWS
 
@@ -51,7 +96,7 @@ Este paso se cumple en el presente documento.
 
 De acuerdo a la configuración decidida por el equipo, un diagrama de Continous Integration y Continous Delivery podría representarse como en la siguiente imagen.
 
-![](images/cicd_diagram.png)
+![](images/diagrams/cicd_diagram.png)
 
 ## 2.h Manejo de IaC en AWS
 
