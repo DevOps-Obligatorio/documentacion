@@ -6,11 +6,15 @@ En el presente documento se demuestran los avances, decisiones y observaciones r
 
 ## 2.a Creación de ambientes para microservicios
 
-Se utilizaron los microservicios propuestos por el Docente. Los cuatro microservicios fueron subidos a repositorios independientes y con sus correspondientes ramas: `main`, `Develop`, `Testing` y `Staging`.
+Se utilizaron los microservicios propuestos por el Docente. Los cuatro microservicios fueron subidos a repositorios independientes y con sus correspondientes ramas: `main`, `Develop`, `Testing` y `feature`.
 
 Esto fue siguiendo una metodología de trabajo basada en Gitflow según se muestra en el diagrama a continuación.
 
-![](images/diagrams/gitflow_diagram.png)
+![](images/diagrams/gitflow-ok.png)
+
+A su vez, se diagrama representa también una rama `fix` la cual sería implementada en casos de testing fallidos e iteraría
+
+![](images/diagrams/gitflow-error.png)
 
 A continuación se listan los enlaces para cada repositorio de microservicio:
 
@@ -19,35 +23,20 @@ A continuación se listan los enlaces para cada repositorio de microservicio:
 - [shipping-service-example][4]
 - [products-service-example][5]
 
-Observar que en primera instancia, en cada repositorio se agregaron las cuatro ramas a utilizar siguiendo la metodología Gitflow. Mediante un comando `git branch -a` se pueden ver todas las ramas:
 
-```
-* main
-  remotes/origin/Develop
-  remotes/origin/HEAD -> origin/main
-  remotes/origin/Staging
-  remotes/origin/Testing
-  remotes/origin/main
-```
 ## Build Microservicios
+Se detectó la necesidad de resolver un conflicto en los puertos que los diferentes microservicios utilizaban (`8080`). 
 
-## Docker Hub
+1. Eliminar el ejecutable  `.jar`
+2. En `src/main/resources/` modificar `application.properties` agregar `sever.port=808x`
+3. Correr el comando `mvn clean package --file pom.xml` en la raíz del proyecto del microservicio
+4. Obtener la ruta del nuevo ejecutable según indique la salida del comando anterior.
+5. Con la ruta, completar el archivo `maven-docker-ecr.yml`
 
-Pasos para hacer `push` a una imagen local a `Docker Hub`
-- `docker login`
-- Crear imagen `docker build --build-arg JAR_FILE=orders-service-example.jar -t orders-service-example:1 .`
+Esta limitante se debe a una funcionalidad no permitida (`port-mapping`) por fargate. ??
 
-- `docker tag shipping-service-example:1 shipping-service-1`
-- `docker push lucasdock/devops-ort:obl`
+A su vez para el microservicio de `orders-service-example` se debió modificar 
 
-
-## Github Actions
-
-Se utiliza el servicio `Github Actions`
-
-Ver `.github/worflows` - se ejecutan varios en paralelo
-Ver Docker Hub
-Ver Sonarcloud.io
 
 ## Terraform
 1- Crear archivo `main.tf`
@@ -55,6 +44,13 @@ Ver Sonarcloud.io
 3- Una vez finalizado, correr `terraform validate`
 4- Una vez finalizado, correr `terraform plan`
 5- Finalmente `terraform apply`
+
+En este punto debería verse el avance de los procesos del lado de AWS.
+
+Observar:
+- En `Amazon ECS/Clusters` observar `myapp-cluster`
+- En `my-app-service` se encontrarán las `tasks`
+- Y finalmente 3 contenedores en estado `running`
 
 
 ## AWS - ECS
@@ -68,14 +64,31 @@ Security Group creado por defecto queda
 
 ### Requisitos de red: Subnet, Security Groyp, Route Table y NAT Gateway
 
+## Docker Hub
 
+Pasos para hacer `push` a una imagen local a `Docker Hub`
+- `docker login`
+- Crear imagen `docker build --build-arg JAR_FILE=orders-service-example.jar -t orders-service-example:1 .`
+
+- `docker tag shipping-service-example:1 shipping-service-1`
+- `docker push lucasdock/devops-ort:obl`
+
+
+## Github Actions
+
+Se utiliza el servicio `Github Actions`. Cada `push` de `git` en la rama `Testing` es un disparador.
+
+Ver `.github/worflows` - se ejecutan varios en paralelo
+Ver Docker Hub
+Ver Sonarcloud.io
 
 ## Sonarcloud
 
 - Registro e inicio de sesion
 ![](images/SonarCloud/1-sonarcloud.png)
 
-- Detección de oranización de Pbligatorio
+- Detección de oranización de Obligatorio
+- Generación de Secret Token para conectar repositorios correctamente
 
 ## 2.b Empaquetado en containers y despliegue en AWS
 
