@@ -86,13 +86,15 @@ Ver Sonarcloud.io
 
 En la web de [SonarCloud][7] se procede de la siguient forma
 
-- Registro e inicio de sesion
-![](images/SonarCloud/1-sonarcloud.png)
+<img src="images/SonarCloud/1-sonarcloud.png" alt="" width="800"/>
 
+- Registro e inicio de sesion
 - Detección de oranización de Obligatorio
 - Generación de Secret Token para conectar repositorios correctamente
 - Desactivar `Automatic Analaysis` porque da conflicto con automatización mediante `Terraform` 
 - También
+
+
 
 
 <div style="page-break-after: always;"></div>
