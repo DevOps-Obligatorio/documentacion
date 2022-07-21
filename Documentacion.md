@@ -39,12 +39,6 @@ A su vez, para dar conectividad por internet, se agregó el `internet gateway` c
 - Shipping Service `8082`
 - Orders Service `8083`
 
-
-### Docker Hub
-
-Como backup, se utilizó Docker Hub para subir las imagenes de los contenedores en paralelo a AWS. Para ello fue necesario agregar este paso en `Github Actions` con el conjunto de credenciales correspondiente.
-
-
 <div style="page-break-after: always;"></div>
 
 # 2.c Testeo y resultados con Postman
@@ -75,17 +69,42 @@ Para realizar pruebas básicas, se procedió mediante la ejecución de las sigui
 
 ## Sonarcloud
 
-En la web de [SonarCloud][7] se procede de la siguient forma
+Mediante la automatización con `Github Actions` se configura el análisis de código estático con SonarCloud.
 
-<img src="images/SonarCloud/1-sonarcloud.png" alt="" width="800"/>
+Se ajustaron de forma conveniente para que permitiera detectar facilmente su reacción a los cambios. Por ejemplo, se mostrará el ajuste del `Quality Gate` llamado `Methods should not return constants` y también el `Quality Gate` llamado `Duplicated Lines (%)` el cual analiza la cantidad de líneas de código repetidas.
 
-- Registro e inicio de sesion
-- Detección de oranización de Obligatorio
-- Generación de Secret Token para conectar repositorios correctamente
-- Desactivar `Automatic Analysis` porque da conflicto con automatización mediante `Terraform` 
-- También
+### Prueba 1
 
-Para detectar que SonarCloud está respondiendo a modificaciones posibles del código fuente, se ajustaron los umbrales de aceptación de forma conveniente y que permitiera detectar facilmente su reacción a los cambios. Por ejemplo, se mostrará el ajuste del `Quality Gate` llamado `Duplicated Lines (%)` el cual analiza 
+Primero, se modifica el archivo ```src/main/java/uy/edu/ort/devops/ordersserviceexample/OrdersServiceExampleApplication.java```
+proveniente del microservicio `orders-service-example`
+
+Concretamente, para disparar el `Quality Gate` de `Methods should not return constants` se agrega en el código la siguiente función
+
+```java
+public int sonarFailure(){
+	int a = 10;
+	int b = 50;
+	if (b<a){
+		b++;
+		return a;
+	}
+	return a;
+}
+```
+Este método devuelve una constante lo cual genera que se dispare ese `Quality Gate` bloqueante que marcará como fallido el análisis de código estático según estos criterios. La recomendación particular para solventar este issue, razonablemente se trata de modificar la función para que no retorne un valor invariante:
+
+<img src="images/sonarcloud/sonarcloud-constant-solution.png" alt="" />
+
+### Prueba 2
+
+Se modifica nuevamente el mismo archivo pero esta vez, comentando el método anterior y agregando repetidas veces la línea que se muestra a continuación:
+```java
+System.out.println("Testing Sonar");
+```
+
+Una vez más se obtiene un resultado de test fallido y la recomendación se trata de implementar un `logger` para reemplazar esas líneas.
+
+<img src="images/sonarcloud/sonarcloud-lines.png" alt="" />
 
 <div style="page-break-after: always;"></div>
 
@@ -136,26 +155,36 @@ En el diagrama se muestra el proceso desde el trabajo de un desarrollador que ge
 
 # 2.h Manejo de IaC en AWS
 
-### Terraform
-1. Crear archivo `main.tf`
-2. Para inicializarlo correr `terraform init` en el mismo directorio del `main.tf`
-3. Una vez finalizado, correr `terraform validate`
-4. Una vez finalizado, correr `terraform plan`
-5. Finalmente `terraform apply`
-
-En este punto debería verse el avance de los procesos del lado de AWS.
-
-### Bloques de código
-
-- Networking
-- AWS
-- ...
-
-### Github Actions
+## Github Actions
 
 Se utiliza el servicio `Github Actions` para que cada `push` de `git` en la rama `Testing` dispare las acciones de CI/CD.
 
 En cada repositorio de microservicio, se puede ver en el siguiente path `.github/worflows` lo configurado.
+
+## Docker Hub
+
+Como backup, se utilizó Docker Hub para subir las imagenes de los contenedores en paralelo a AWS. Para ello fue necesario agregar este paso en `Github Actions` con el conjunto de credenciales correspondiente.
+
+## Terraform
+
+A continuación se describen algunos de los bloques más relevantes de la infraestructura desplegada.
+
+## Provider AWS
+Se definió como preveedor cloud a AWS tas como se solicitaba y en la región `us-east-1`
+
+## VPC, networking y seguridad
+
+Se define una `VPC` de nombre `main` y sus componentes de red necesarios para la conectividad tanto interna como acceso externo. Aquí se incluyen las `subnets` primaria y secundaria en diferentes `availability zones` para seguir las prácticas recomendades. Así como también el ruteo, permisos de seguridad y NAT.
+
+## Cluster ECS
+
+Se define un cluster de contenedores para agrupar el ambiente de los microservicios. En él se definirán `tasks definition` y `services definition` como se descibe a continuación.
+
+## Taks y Services Definition
+
+En las `tasks definition` se agregan las requisitos básicos para los contenedores junto con información particular de cada uno, como por ejemplo su nombre y la `URL` para obtener la imagen cargada en `ECR`.
+
+Por otra parte, en `service definition` se configuran los parámetros para control de la ejecución de las `tasks` definidas anteriormente.
 
 # 2.i Acceso al equipo docente
 
