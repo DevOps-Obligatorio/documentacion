@@ -157,7 +157,7 @@ En el diagrama se muestra el proceso desde el trabajo de un desarrollador que ge
 
 ## Github Actions
 
-Se utiliza el servicio `Github Actions` para que cada `push` de `git` en la rama `Testing` dispare las acciones de CI/CD.
+Se utiliza el servicio `Github Actions` para que cada `push` de `git` en la rama `Testing` dispare las acciones de CI/CD. Concretamente en el caso del microservicio Orders, se cambió a la rama `Develop` en lugar de `Testing`.
 
 En cada repositorio de microservicio, se puede ver en el siguiente path `.github/worflows` lo configurado.
 
