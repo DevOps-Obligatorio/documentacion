@@ -186,6 +186,8 @@ En las `tasks definition` se agregan las requisitos básicos para los contenedor
 
 Por otra parte, en `service definition` se configuran los parámetros para control de la ejecución de las `tasks` definidas anteriormente.
 
+<div style="page-break-after: always;"></div>
+
 # 2.i Acceso al equipo docente
 
 Para brindar acceso de sólo lectura al equipo docente se procede a agregar con rol `Member?` a los usuarios [ElLargo][10], [mauricioamendola][11] y [saitama-dh][12] dentro de la organización [DevOps-Obligatorio][1] la cual contiene los repositorios y documentación necesarias para la correcta evaluación.
