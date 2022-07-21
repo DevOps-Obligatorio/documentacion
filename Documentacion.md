@@ -42,7 +42,7 @@ A su vez, para dar conectividad por internet, se agregó el `internet gateway` c
 
 ### Docker Hub
 
-Como backup, se utilizó Docker Hub para subir las imagenes de los contenedores en paralelo a AWS.
+Como backup, se utilizó Docker Hub para subir las imagenes de los contenedores en paralelo a AWS. Para ello fue necesario agregar este paso en `Github Actions` con el conjunto de credenciales correspondiente.
 
 
 <div style="page-break-after: always;"></div>
@@ -51,11 +51,23 @@ Como backup, se utilizó Docker Hub para subir las imagenes de los contenedores 
 
 Cada Microservicio soporta las siguientes peticiones a través de sus endpoints:
 
-- Orders: `POST` (a revisar)
 - Products: `GET`
-- Shipping: `GET` (a revisar)
+- Orders: `POST` (no configurado)
+- Shipping: `GET` (no configurado)
 
 Para realizar pruebas básicas, se procedió mediante la ejecución de las siguientes pruebas manuales:
+
+- Petición `GET` a la URL `myapp-load-balancer-1298837249.us-east-1.elb.amazonaws.com` para que responda `404 Error`
+  
+<img src="images/postman/post404.png" alt="" width="800"/>
+
+- Petición `GET` a la URL `myapp-load-balancer-1298837249.us-east-1.elb.amazonaws.com/products` para que responda `200 OK` y el listado de objetos de productos hardcodeados.
+  
+<img src="images/postman/post-products.png" alt="" width="800"/>
+
+- Petición `GET` a la URL `myapp-load-balancer-1298837249.us-east-1.elb.amazonaws.com/products/321` para que responda `200 OK` y la información del producto con `ID=321`.
+  
+<img src="images/postman/post-product.png" alt="" width="800"/>
 
 <div style="page-break-after: always;"></div>
 
